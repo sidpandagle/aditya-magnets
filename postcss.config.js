@@ -1,7 +1,5 @@
-module.exports = {
-	plugins: {
-		// Ensure Tailwind and Autoprefixer are registered if installed
-		tailwindcss: {},
-		autoprefixer: {}
-	}
+export default {
+  plugins: {
+    // Intentionally empty: Tailwind v4 is provided via @tailwindcss/vite plugin in vite.config.ts
+  }
 };
