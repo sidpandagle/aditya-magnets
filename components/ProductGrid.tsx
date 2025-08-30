@@ -8,9 +8,40 @@ export interface ProductMeta {
   price: number;
   compareAt?: number;
   rating?: number;
+  isPopular?: boolean;
 }
 
-const products: ProductMeta[] = Object.values(categories).flatMap(c => c.products as ProductMeta[]).slice(0, 4);
+// Build the popular products list from category data. Exclude non-magnet kits (learn-and-make).
+const magnetCategories = Object.entries(categories).filter(([key]) => key !== 'learn-and-make');
+const perCatPopular: ProductMeta[][] = magnetCategories.map(([, c]) => (c.products as ProductMeta[]).filter(p => p.isPopular));
+
+// Interleave one-by-one across categories to ensure variety on the homepage.
+function interleavePopular(max: number): ProductMeta[] {
+  const result: ProductMeta[] = [];
+  let added = true;
+  let round = 0;
+  while (result.length < max && added) {
+    added = false;
+    for (const arr of perCatPopular) {
+      if (result.length >= max) break;
+      const item = arr[round];
+      if (item) {
+        result.push(item);
+        added = true;
+      }
+    }
+    round += 1;
+  }
+  return result;
+}
+
+const interleaved = interleavePopular(4);
+
+const allProducts: ProductMeta[] = magnetCategories.flatMap(([, c]) => c.products as ProductMeta[]);
+const products: ProductMeta[] = (interleaved.length > 0
+  ? interleaved
+  : [...allProducts].sort((a, b) => (b.rating || 0) - (a.rating || 0))
+).slice(0, 4);
 
 export const ProductGrid: React.FC = () => (
   <section className="section" aria-labelledby="products-heading">
