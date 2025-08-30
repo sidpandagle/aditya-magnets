@@ -1,0 +1,129 @@
+@import "tailwindcss";
+@reference { layer: utilities; }
+
+/* Removed @custom-variant and @theme to avoid Tailwind v4 layer conflicts */
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Theme inline variables collapsed into plain CSS vars below */
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: #0d9488; /* teal-600 */
+  --primary-foreground: #ffffff;
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: #99f6e4; /* teal-200 */
+  --accent-foreground: #115e59; /* teal-800 */
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: #2dd4bf; /* teal-400 */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(0.21 0.006 285.885);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.705 0.015 286.067);
+  /* Map semantic color-* vars used in custom CSS to base tokens */
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: #2dd4bf; /* brighter teal in dark */
+  --primary-foreground: #052e2b;
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: #0f766e;
+  --accent-foreground: #ecfeff;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: #2dd4bf;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.552 0.016 285.938);
+  /* Keep mappings in dark mode as well */
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+}
+
+/* Base resets moved to plain CSS to avoid @layer conflicts in multi-project workspace */
+*, *::before, *::after { border-color: var(--border); }
+body { background-color: var(--background); color: var(--foreground); }
+
+/* Project-specific global styles ported from Next.js app */
+html { scroll-behavior: smooth; }
+.container { width: 100%; margin: 0 auto; padding: 0 1rem; max-width: 1240px; }
+.nav-links { display:flex; gap:2rem; font-size: 0.95rem; font-weight:500; }
+.nav-links a { position: relative; display:inline-block; padding: .25rem 0; }
+.nav-links a:after { content:""; position:absolute; left:0; bottom:-4px; height:2px; width:0; background: var(--color-accent); transition: width .3s; }
+.nav-links a:hover:after, .nav-links a.active:after { width:100%; }
+.nav-toggle { display:none; background:transparent; border:1px solid var(--color-border); padding:.45rem .6rem; border-radius:6px; cursor:pointer; }
+.rating-stars { color:#f59e0b; display:inline-flex; gap:2px; }
+.gallery-main-img { width:100%; height:100%; display:block; object-fit:cover; transition: opacity .35s ease-in-out, transform .35s ease-in-out; }
+.gallery-main-img.fade-out { opacity:0; transform: scale(.995); }
+.gallery-main-wrap { border-radius:16px; overflow:hidden; aspect-ratio: 4/3; background:#f1f5f4; }
+.thumbnail-strip { overflow-x:auto; -webkit-overflow-scrolling: touch; }
+.thumbnail-strip::-webkit-scrollbar { height:10px; }
+.thumbnail-strip::-webkit-scrollbar-thumb { background: #cbd5d1; border-radius: 8px; }
+.thumbnail-btn { border:1px solid var(--color-border); padding:0; border-radius:8px; overflow:hidden; background:transparent; cursor:pointer; flex:0 0 78px; height:78px; display:inline-flex; align-items:center; justify-content:center; }
+.thumbnail-btn.active { border:2px solid var(--color-accent); }
+.thumbnail-img { width:100%; height:100%; object-fit:cover; display:block; }
+@media (max-width: 480px) { .thumbnail-btn { flex:0 0 64px; height:64px; } }
+.gallery-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.45); color:#fff; border:none; width:40px; height:40px; border-radius:20px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.25rem; }
+.gallery-nav.prev { left:12px; }
+.gallery-nav.next { right:12px; }
+.gallery-nav { z-index: 20; }
+.gallery-nav:focus { outline:2px solid #fff; }
+.gallery-nav:active { transform: translateY(-50%) scale(0.98); }
+.thumbnail-strip { padding-bottom: 6px; }
+.thumb-play { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem; pointer-events:none; }
+.thumbnail-btn { position:relative; }
+.table-icon-points { display:grid; gap:1rem; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); margin-top:2rem; }
+.point { display:flex; gap:.9rem; align-items:flex-start; }
+.point-icon { width:38px; height:38px; background:#e2ecea; border-radius: 10px; display:flex; align-items:center; justify-content:center; color:#27403C; font-weight:600; font-size:.9rem; }
+.point h4 { margin:.1rem 0 .25rem; font-size:.95rem; }
+.point p { margin:0; font-size:.75rem; color:#4b5563; }
+@media (max-width: 760px) { .nav-links { gap:1.25rem; } }
+@media (max-width: 900px) { .nav-links { display:none; position:absolute; right:1rem; top:64px; background:#fff; box-shadow:var(--shadow-md); border:1px solid var(--color-border); padding:1rem; border-radius:8px; flex-direction:column; gap:1rem; width:220px; } .nav-links.open { display:flex; } .nav-toggle { display:inline-flex; } }
+@media (max-width: 560px) { .container { padding: 0 0.75rem; } .gallery-main-wrap { aspect-ratio: 3/4; } }
+@media (max-width: 420px) { .gallery-main-wrap { aspect-ratio: 4/5; } .nav-links { right:0.5rem; top:56px; width:180px; } }
